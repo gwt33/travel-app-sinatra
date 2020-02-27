@@ -7,24 +7,6 @@ class DestinationsController < ApplicationController
     erb :"/destinations/index"
   end
 
-  # GET: /destinations/new
-  # New action ends in a render form
-  get "/destinations/new" do
-    erb :"/destinations/new"
-  end
-
-  # POST: /destinations
-  # CREATE action for destinations
-  post "/destinations" do
-    @destination = Destination.new(params["destination"])
-    if @destination.save
-      redirect "/destinations"
-    else
-      @errors = @destination.error.full_messages
-      erb :"/destination/new"
-    end
-  end
-
   # GET: /destinations/5
   # destination show action
   # dynamic route variable (:id)
@@ -37,30 +19,47 @@ class DestinationsController < ApplicationController
   # GET: /destinations/5/edit
   # destinations edit action
   get "/destinations/:id/edit" do
-    @destination = Destination.find_by_id(params[:id])
-    erb :"/destinations/edit"
+    if logged_in?
+      @destination = Destination.find_by_id(params[:id])
+      if @user == current_user
+        erb :"/destinations/edit"
+      else
+        redirect '/'
+      end
+    else
+      redirect '/login'
+    end
   end
 
   # PATCH: /destinations/5
   # destinations update action
   patch "/destinations/:id" do
     @destination = Destination.find_by_id(params[:id])
-    if @destination.update(params[:destination])
-      redirect "/destinations/#{@destination.id}"
+    if logged_in?
+      if @destination.update(params[:destination])
+        redirect "/destinations/#{@destination.id}"
+      else
+        erb :'/authors/edit'
+      end
     else
-      erb :'/authors/edit'
+      redirect '/login'
     end
   end
 
   # DELETE: /destinations/5/delete
   delete "/destinations/:id/delete" do
     @destination = Destination.find_by_id(params[:id])
-    if @destination
+    if @destination.user_id == current_user.id
       @destination.destroy 
+      redirect '/destinations'
     end
       redirect '/destinations'
-  # end
+  end
 end
 
 # get request renders a page to show something
 # patch, post delete ends in a redirect or ONLY shows errors
+
+# params gets populated by:
+# form input data
+# by dynamic route variables
