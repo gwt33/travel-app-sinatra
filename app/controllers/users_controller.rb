@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-        get '/login' do
+      get '/login' do
           erb :login
       end
 
@@ -14,10 +14,6 @@ class UsersController < ApplicationController
 
       post '/users' do
 
-      end
-
-      get '/users/:id' do
-        
       end
 
       get '/logout' do
