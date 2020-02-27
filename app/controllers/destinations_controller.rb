@@ -7,6 +7,25 @@ class DestinationsController < ApplicationController
     erb :"/destinations/index"
   end
 
+  get '/destinations/new' do
+    erb :'/destinations/new'
+  end
+
+  post '/destinations' do
+    #create a new destination and save it to DB
+    #only save a destination if there's content in it
+    if !logged_in?
+        redirect '/'
+    end
+    #only save a destination if there's a logged in user
+    if params[:destination] != "" && params[:content] != ""
+        @destination = Destination.create(destination: params[:destination], content: params[:content], user_id: current_user.id,)
+        redirect "/destinations/#{@destination.id}"
+    else
+        redirect '/destinations/new'
+    end
+end
+
   # GET: /destinations/5
   # destination show action
   # dynamic route variable (:id)
@@ -21,7 +40,7 @@ class DestinationsController < ApplicationController
   get "/destinations/:id/edit" do
     if logged_in?
       @destination = Destination.find_by_id(params[:id])
-      if @user == current_user
+      if @destination.user_id == current_user.id
         erb :"/destinations/edit"
       else
         redirect '/'
@@ -39,7 +58,7 @@ class DestinationsController < ApplicationController
       if @destination.update(params[:destination])
         redirect "/destinations/#{@destination.id}"
       else
-        erb :'/authors/edit'
+        erb :'/destinations/edit'
       end
     else
       redirect '/login'
