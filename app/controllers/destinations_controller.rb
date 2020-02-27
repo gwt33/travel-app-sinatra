@@ -19,7 +19,7 @@ class DestinationsController < ApplicationController
     end
     #only save a destination if there's a logged in user
     if params[:destination] != "" && params[:content] != ""
-        @destination = Destination.create(destination: params[:destination], content: params[:content], user_id: current_user.id,)
+        @destination = Destination.create(destination: params[:destination], content: params[:content], user_id: current_user.id)
         redirect "/destinations/#{@destination.id}"
     else
         redirect '/destinations/new'
