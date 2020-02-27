@@ -1,31 +1,32 @@
 class UsersController < ApplicationController
 
   get '/signup' do
-    erb :"/signup/new"
+    erb :"/users/signup"
   end
 
   post '/signup' do
     @user = User.new(params["user"])
-    if user.save
-      session[:user_id] = user.id
+    if @user.save
+      session[:user_id] = @user.id
       redirect "/destinations"
     else
-      @errors = user.error.full_messages
-      erb :"/user/new"
+      @errors = @user.errors.full_messages
+      erb :"/users/login"
     end  
   end
   
   get '/login' do
-    erb :'/users/new'
+    erb :'/users/login'
   end
 
   post '/login' do
     user = User.find_by(username: params[:user][:username])
     if user && user.authenticate(params[:user][:password])
+      # creates a session cookie in web browser
       session[:user_id] = user.id   # <-- this logs someone
       redirect '/destinations'
     else
-      redirect '/users/new'
+      redirect '/login'
     end
   end
 
