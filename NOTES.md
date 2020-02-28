@@ -1,14 +1,14 @@
 # Sinatra Travel CRUD App Project
 
-    This is a travel journal app. A user can keep track of their destinations and write notes on it.
+    This is a travel log app. A user can keep track of their destinations and write notes on it.
 
 # Users will:
     - Log in, sign up, and log out
 # User can:
-    - create a travel journal entry
-    - be able to see all destinations and journals
-    - edit their destination and journals
-    - delete thier destinations journals
+    - create a travel destination entry
+    - be able to see all destinations
+    - edit their destination
+    - delete thier destinations
 
 # WireFraming
 
@@ -22,7 +22,7 @@
     - Destinations
         - Attributes
             - destination
-            - journal
+            - content
             - user_id
         - belongs_to :user
 
