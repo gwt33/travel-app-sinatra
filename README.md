@@ -1,6 +1,6 @@
 # Travel CRUD app
 
-This sinatra app lets users input their travel destinations along with the date and any notes or a small journal entry. They can log in, sign up, edit, and delete their destinations.
+This sinatra app lets users keep a log about the destinations they've been to. They can log in, sign up, edit, and delete their destinations and content.
 
 LICENSE
 
