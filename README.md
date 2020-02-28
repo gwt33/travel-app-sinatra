@@ -8,7 +8,11 @@ To run the app, first git clone the repo to your machine.
 
     $ git clone git@github.com:93geraldtee/travel-app-sinatra.git
 
-Then, cd into the file and run bundle install:
+Then, cd into the file:
+
+    $ cd travel-app-sinatra
+
+Run bundle install:
 
     $ bundle install
 
