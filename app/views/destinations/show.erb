@@ -2,7 +2,7 @@
 <h2><%= @destination.destination %></h2>
 <p><%= @destination.content %></p>
 
-<p>Created on <%= @destination.created_at.strftime("%B %d, %Y") %> by </p>
+<p>Created on <%= @destination.created_at.strftime("%B %d, %Y") %></p>
 <p>By <%= current_user[:username] %></p>
 
 <a href="/destinations/<%=@destination.id%>/edit">Edit</a>
