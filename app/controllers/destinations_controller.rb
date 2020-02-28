@@ -3,7 +3,8 @@ class DestinationsController < ApplicationController
   # GET: /destinations
   # READ or index route/action
   get "/destinations" do
-    @destinations = Destination.all
+    @destinations = current_user.destinations
+    @current_user = current_user
     erb :"/destinations/index"
   end
 
@@ -14,17 +15,17 @@ class DestinationsController < ApplicationController
   post '/destinations' do
     #create a new destination and save it to DB
     #only save a destination if there's content in it
-    if !logged_in?
-        redirect '/'
-    end
+    # if !logged_in?
+    #     redirect '/'
+    # end
     #only save a destination if there's a logged in user
     if params[:destination] != "" && params[:content] != ""
-        @destination = Destination.create(destination: params[:destination], content: params[:content], user_id: current_user.id)
+        @destination = Destination.create(destination: params[:destination], content: params[:content], user_id: current_user[:id])
         redirect "/destinations/#{@destination.id}"
     else
         redirect '/destinations/new'
     end
-end
+  end
 
   # GET: /destinations/5
   # destination show action
@@ -32,22 +33,26 @@ end
   # params carries information
   get "/destinations/:id" do
     @destination = Destination.find_by_id(params[:id])
-    erb :"/destinations/show"
+    if @destination
+      erb :"/destinations/show"
+    else
+      redirect '/destination'
+    end
   end
 
   # GET: /destinations/5/edit
   # destinations edit action
-  get "/destinations/:id/edit" do
+  get '/destinations/:id/edit' do
     if logged_in?
-      @destination = Destination.find_by_id(params[:id])
-      if @destination.user_id == current_user.id
-        erb :"/destinations/edit"
-      else
-        redirect '/'
-      end
-    else
-      redirect '/login'
-    end
+        @destination = Destination.find_by(id: params[:id])
+        if @destination.user_id == current_user.id 
+            erb :'destinations/edit'
+        else 
+            redirect '/destinations'
+        end 
+    else 
+        redirect '/login'
+    end 
   end
 
   # PATCH: /destinations/5
@@ -74,6 +79,7 @@ end
     end
       redirect '/destinations'
   end
+
 end
 
 # get request renders a page to show something
