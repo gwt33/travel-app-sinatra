@@ -1,1 +1,18 @@
-<h1>This is the Model's index page.</h1>
+<h1>All Destinations</h1>
+
+<br>
+
+<% @destinations.each do |destination| %>
+
+    <br>
+    <h2><strong><%= destination.destination %></strong></h2>
+    <br>
+    <p><%= destination.content %></p>
+
+    <p>Created by <%= @current_user[:username] %></p>
+    <h5><a href="/destinations/<%= destination.id %>">Created on <%= destination.created_at.strftime("%B %d, %Y") %></a></h5>
+    <a href="/destinations/<%= destination.id %>/edit">Edit</a>
+    <br><br>
+
+<% end %>
+<br><br>
