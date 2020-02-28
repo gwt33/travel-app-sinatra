@@ -23,7 +23,7 @@ class UsersController < ApplicationController
     user = User.find_by(username: params[:user][:username])
     if user && user.authenticate(params[:user][:password])
       # creates a session cookie in web browser
-      session[:user_id] = user.id   # <-- this logs someone
+      session[:user_id] = user.id   # <-- this logs someone in
       redirect '/destinations'
     else
       redirect '/login'
