@@ -1,1 +1,19 @@
-<h1>Insert the form to edit an instance of your model here.</h1>
+<h1>Edit your Destination</h1>
+
+<form action="/destinations/<%= @destination.id %>" method="POST">
+    <input type="hidden" name="_method" value="patch">
+    <label for="name">Destination:</label>
+    <input type="text" name="destination[destination]" id="destination" value="<%= @destination.destination %>">
+
+    <label for="content">Content:</label>
+    <textarea name="destination[content]" style="width:auto; height:auto;"><%= @destination.content %></textarea>
+    <input type="submit" name="" value="Edit Entry">
+</form>
+
+<br><br>
+<form action="/destinations/<%=@destination.id%>/delete" method="post">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="submit" value="Delete Destination">
+</form>
+
+<a href="/"></a>
